@@ -126,6 +126,7 @@ export function TodoApp() {
   return (
     <Box sx={{ mt: 15 }}>
       <Container maxWidth="sm">
+        
         <TitleTodo />
 
         <SearchTodo onSearchTodo={handleSearchTodo} />
@@ -140,6 +141,7 @@ export function TodoApp() {
           onDeleteTodo={handleDeleteTodo}
           onUndoTodo={handleUndoTodo}
         />
+
       </Container>
     </Box>
   );

@@ -32,24 +32,28 @@ export function FilterTodo({ filter, onFilterTodo }: FilterTodoProps) {
 
   return (
     <Box sx={{ display: "flex", gap: 1.5, mb: 1.5 }}>
+
       <Button
         variant={filter === "all" ? "contained" : "outlined"}
         onClick={handleClick("all")}
       >
         All
       </Button>
+
       <Button
         variant={filter === "completed" ? "contained" : "outlined"}
         onClick={handleClick("completed")}
       >
         Completed
       </Button>
+
       <Button
         variant={filter === "uncompleted" ? "contained" : "outlined"}
         onClick={handleClick("uncompleted")}
       >
         Uncompleted
       </Button>
+      
       <Button
         variant={filter === "deleted" ? "contained" : "outlined"}
         onClick={handleClick("deleted")}
