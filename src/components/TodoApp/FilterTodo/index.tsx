@@ -1,5 +1,6 @@
 import { Box, Button } from "@mui/material";
-import { Filter } from "../../../models";
+import { Filter } from "src/models";
+
 
 export interface FilterTodoProps {
   filter: Filter;
@@ -63,3 +64,4 @@ export function FilterTodo({ filter, onFilterTodo }: FilterTodoProps) {
     </Box>
   );
 }
+

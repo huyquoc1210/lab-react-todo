@@ -6,7 +6,8 @@ import { FilterTodo } from "./FilterTodo";
 import ListTodo from "./ListTodo";
 import { SearchTodo } from "./SearchTodo";
 import { TitleTodo } from "./TitleTodo";
-import { sleep } from "../../utils/misc";
+import { sleep } from "src/utils/misc";
+
 // import { v4 as uuidv4 } from "uuid";
 
 const TODOLIST: Todo[] = [
@@ -76,8 +77,10 @@ export function TodoApp() {
   const handleChangTodoCallback = useCallback(
     function handleChangeTodo(todoId: string) {
       const newTodoList = todoList.map((todo) => {
-        if (todo.id !== todoId) return todo;
-        return { ...todo, isCompleted: !todo.isCompleted };
+        if (todo.id === todoId) {
+          return { ...todo, isCompleted: !todo.isCompleted };
+        }
+        return todo;
       });
       setTodoList(newTodoList);
     },
@@ -126,7 +129,6 @@ export function TodoApp() {
   return (
     <Box sx={{ mt: 15 }}>
       <Container maxWidth="sm">
-        
         <TitleTodo />
 
         <SearchTodo onSearchTodo={handleSearchTodo} />
@@ -141,7 +143,6 @@ export function TodoApp() {
           onDeleteTodo={handleDeleteTodo}
           onUndoTodo={handleUndoTodo}
         />
-
       </Container>
     </Box>
   );

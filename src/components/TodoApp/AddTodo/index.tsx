@@ -2,8 +2,9 @@ import AddIcon from "@mui/icons-material/Add";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Todo } from "../../../models";
-import { sleep } from "../../../utils/misc";
+import { Todo } from "src/models";
+import { sleep } from "src/utils/misc";
+
 
 export interface AddTodoProps {
   onAddTodo: (todo: Todo) => void;
@@ -34,6 +35,7 @@ export function AddTodo({ onAddTodo }: AddTodoProps) {
 
       onAddTodo(newTodo);
       setValue("");
+
     } catch (error) {
       console.log(error);
     } finally {
@@ -54,6 +56,7 @@ export function AddTodo({ onAddTodo }: AddTodoProps) {
         mb: 1.5,
       }}
     >
+
       <TextField
         type="text"
         placeholder="...Add"
@@ -61,6 +64,7 @@ export function AddTodo({ onAddTodo }: AddTodoProps) {
         onChange={handleChange}
         value={value}
       />
+
       <LoadingButton
         variant="contained"
         type="submit"
@@ -71,6 +75,7 @@ export function AddTodo({ onAddTodo }: AddTodoProps) {
       >
         Add
       </LoadingButton>
+      
     </Box>
   );
 }

@@ -1,8 +1,8 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Checkbox, IconButton, Typography } from "@mui/material";
-import { Todo } from "../../../models";
-import { ChangeEvent, MouseEvent, memo, useState } from "react";
 import UndoIcon from "@mui/icons-material/Undo";
+import { ChangeEvent, MouseEvent, memo } from "react";
+import { Todo } from "src/models";
 
 export interface ListTodoProps {
   todoList: Todo[];
