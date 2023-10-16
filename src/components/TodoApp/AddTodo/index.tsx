@@ -62,7 +62,7 @@ export function AddTodo({ onAddTodo }: AddTodoProps) {
     >
       <TextField
         type="text"
-        placeholder="...Add"
+        placeholder="Add..."
         sx={{ flexGrow: 1 }}
         onChange={handleChange}
         value={value}

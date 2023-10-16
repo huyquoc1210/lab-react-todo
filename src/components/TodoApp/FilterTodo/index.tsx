@@ -36,21 +36,18 @@ export function FilterTodo({ filter, onFilterTodo }: FilterTodoProps) {
       >
         All
       </Button>
-
       <Button
         variant={filter === "completed" ? "contained" : "outlined"}
         onClick={handleClick("completed")}
       >
         Completed
       </Button>
-
       <Button
         variant={filter === "uncompleted" ? "contained" : "outlined"}
         onClick={handleClick("uncompleted")}
       >
         Uncompleted
       </Button>
-
       <Button
         variant={filter === "deleted" ? "contained" : "outlined"}
         onClick={handleClick("deleted")}
