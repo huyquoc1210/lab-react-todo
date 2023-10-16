@@ -7,19 +7,17 @@ export interface SearchTodoProps {
   onSearchTodo: (value: string) => void;
 }
 
-export function SearchTodo({ onSearchTodo }: SearchTodoProps) {
+export default function SearchTodo({ onSearchTodo }: SearchTodoProps) {
   const [value, setValue] = useState("");
 
-  function handleChange(
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-  }
+  };
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSearchTodo(value);
-  }
+    onSearchTodo(value.trim());
+  };
 
   return (
     <Box

@@ -1,6 +1,5 @@
 import { Box, Button } from "@mui/material";
-import { Filter } from "src/models";
-
+import { Filter } from "src/types";
 
 export interface FilterTodoProps {
   filter: Filter;
@@ -25,15 +24,12 @@ export function FilterTodo({ filter, onFilterTodo }: FilterTodoProps) {
   //     onFilterTodo("deleted");
   //   }
 
-  function handleClick(filter: Filter) {
-    return function () {
-      onFilterTodo(filter);
-    };
-  }
+  const handleClick = (filter: Filter) => () => {
+    onFilterTodo(filter);
+  };
 
   return (
     <Box sx={{ display: "flex", gap: 1.5, mb: 1.5 }}>
-
       <Button
         variant={filter === "all" ? "contained" : "outlined"}
         onClick={handleClick("all")}
@@ -54,7 +50,7 @@ export function FilterTodo({ filter, onFilterTodo }: FilterTodoProps) {
       >
         Uncompleted
       </Button>
-      
+
       <Button
         variant={filter === "deleted" ? "contained" : "outlined"}
         onClick={handleClick("deleted")}
@@ -64,4 +60,3 @@ export function FilterTodo({ filter, onFilterTodo }: FilterTodoProps) {
     </Box>
   );
 }
-

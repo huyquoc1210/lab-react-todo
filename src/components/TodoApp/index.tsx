@@ -1,12 +1,14 @@
 import { Box, Container } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
-import { Filter, Todo } from "../../models";
+import { sleep } from "src/utils/misc";
+import { Filter, Todo } from "../../types";
+import DeleteTodo from "../DeleteTodo";
+import ToastTodo from "../ToastTodo";
 import { AddTodo } from "./AddTodo";
 import { FilterTodo } from "./FilterTodo";
 import ListTodo from "./ListTodo";
-import { SearchTodo } from "./SearchTodo";
+import SearchTodo from "./SearchTodo";
 import { TitleTodo } from "./TitleTodo";
-import { sleep } from "src/utils/misc";
 
 // import { v4 as uuidv4 } from "uuid";
 
@@ -35,43 +37,54 @@ export function TodoApp() {
   const [todoList, setTodoList] = useState<Todo[]>(() => TODOLIST);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
+  const [todo, setTodo] = useState<Todo | null>(null);
+  const [open, setOpen] = useState(false);
+  const [openToast, setOpenToast] = useState(false);
 
+  // Add Todo
   function handleAddTodo(todo: Todo) {
     setTodoList((prevTodo) => [...prevTodo, todo]);
+    setTodo(todo);
+    setOpenToast(true);
   }
 
-  async function handleDeleteTodo(todoId: string) {
-    if (!todoList) return null;
+  // Toast Todo
+  const handleCloseToast = () => {
+    setOpenToast(false);
+  };
 
-    await sleep(1000);
+  async function handleDeleteTodo() {
+    if (!todo) return;
 
-    const newTodoList = todoList.map((todo) => {
-      if (todo.id !== todoId) return todo;
-      return { ...todo, isDelete: true };
+    await sleep(1000); //
+
+    const newTodoList = todoList.map((item) => {
+      if (item.id !== todo.id) return item;
+      return { ...item, isDelete: true };
     });
     setTodoList(newTodoList);
   }
 
-  function handleUndoTodo(todoDelete: Todo) {
-    setTodoList((prevTodo) => [
-      ...prevTodo,
-      { ...todoDelete, isDelete: false },
-    ]);
-    // .filter(
-    //     (todo) => todo.id !== todoDelete.id
-    //   )
-    // );
-    // undoTodo.map(todo=>{
-    //   if(todo.id!==todoDelete.id)
-    // })
-    // todoList.filter((todo) => {
-    //   if (todo.id !== todoDelete.id) {
-    //     setTodoList((prevTodo) => [
-    //       ...prevTodo,
-    //       { ...todoDelete, isDelete: false },
-    //     ]);
-    //   }
-    // });
+  const handleCloseDeleteTodo = async () => {
+    setOpen(false);
+    setOpenToast(true);
+    await sleep(350); // Khoảng thời gian todo.title bị xoá trước tắt modal
+    setTodo(null);
+  };
+
+  const handleOpenDeleteTodo = (todo: Todo) => {
+    setTodo(todo);
+    setOpen(true);
+  };
+
+  function handleUndoTodo(todoDelete: string) {
+    const newTodoList = todoList.map((todo) => {
+      if (todo.id === todoDelete) {
+        return { ...todo, isDelete: false };
+      }
+      return todo;
+    });
+    setTodoList(newTodoList);
   }
 
   const handleChangTodoCallback = useCallback(
@@ -128,6 +141,8 @@ export function TodoApp() {
 
   return (
     <Box sx={{ mt: 15 }}>
+      <ToastTodo openToast={openToast} onClose={handleCloseToast} todo={todo} />
+
       <Container maxWidth="sm">
         <TitleTodo />
 
@@ -140,10 +155,17 @@ export function TodoApp() {
         <ListTodo
           todoList={result}
           onChangeTodo={handleChangTodoCallback}
-          onDeleteTodo={handleDeleteTodo}
+          onDeleteTodo={handleOpenDeleteTodo}
           onUndoTodo={handleUndoTodo}
         />
       </Container>
+
+      <DeleteTodo
+        open={open}
+        todo={todo}
+        onClose={handleCloseDeleteTodo}
+        onDelete={handleDeleteTodo}
+      />
     </Box>
   );
 }

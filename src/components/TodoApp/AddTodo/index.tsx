@@ -2,9 +2,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { LoadingButton } from "@mui/lab";
 import { Box, TextField } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Todo } from "src/models";
+import { Todo } from "src/types";
 import { sleep } from "src/utils/misc";
-
 
 export interface AddTodoProps {
   onAddTodo: (todo: Todo) => void;
@@ -14,12 +13,18 @@ export function AddTodo({ onAddTodo }: AddTodoProps) {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    // console.log(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-  }
+  };
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const capitalize = (str: string) => {
+    return str
+      .split(" ")
+      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -28,20 +33,19 @@ export function AddTodo({ onAddTodo }: AddTodoProps) {
 
       const newTodo: Todo = {
         id: crypto.randomUUID(),
-        title: value.trim(),
+        title: capitalize(value.trim()),
         isCompleted: false,
         isDelete: false,
       };
 
       onAddTodo(newTodo);
       setValue("");
-
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <Box
@@ -56,7 +60,6 @@ export function AddTodo({ onAddTodo }: AddTodoProps) {
         mb: 1.5,
       }}
     >
-
       <TextField
         type="text"
         placeholder="...Add"
@@ -75,7 +78,6 @@ export function AddTodo({ onAddTodo }: AddTodoProps) {
       >
         Add
       </LoadingButton>
-      
     </Box>
   );
 }

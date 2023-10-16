@@ -2,21 +2,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Checkbox, IconButton, Typography } from "@mui/material";
 import UndoIcon from "@mui/icons-material/Undo";
 import { ChangeEvent, MouseEvent, memo } from "react";
-import { Todo } from "src/models";
+import { Todo } from "src/types";
 
 export interface ListTodoProps {
   todoList: Todo[];
   onChangeTodo: (id: string) => void;
-  onDeleteTodo: (id: string) => void;
-  onUndoTodo: (todo: Todo) => void;
+  onDeleteTodo: (todo: Todo) => void;
+  onUndoTodo: (id: string) => void;
 }
 
-export default memo(function ListTodo({
-  todoList,
-  onChangeTodo,
-  onDeleteTodo,
-  onUndoTodo,
-}: ListTodoProps) {
+export default memo(function ListTodo(props: ListTodoProps) {
+  const { todoList, onChangeTodo, onDeleteTodo, onUndoTodo } = props;
   // function handleDeleteTodo(id: string) {
   //   return function () {
   //     const newTodoList = todoList.filter((todo) => todo.id !== id);
@@ -25,11 +21,10 @@ export default memo(function ListTodo({
   // }
   // const [deletedItem, setDeletedItem] = useState(null);
 
-  function handleDelete(todoId: string) {
-    return function (event: MouseEvent<HTMLButtonElement>) {
-      onDeleteTodo(todoId);
+  const handleDelete =
+    (todo: Todo) => (event: MouseEvent<HTMLButtonElement>) => {
+      onDeleteTodo(todo);
     };
-  }
 
   function handleChange(todoId: string) {
     return function (event: ChangeEvent<HTMLInputElement>) {
@@ -37,9 +32,9 @@ export default memo(function ListTodo({
     };
   }
   // console.log(todoList);
-  function handleUndo(todo: Todo) {
+  function handleUndo(todoId: string) {
     return function (event: MouseEvent<HTMLButtonElement>) {
-      onUndoTodo(todo);
+      onUndoTodo(todoId);
       // setDeletedItem(null)
     };
   }
@@ -70,27 +65,6 @@ export default memo(function ListTodo({
     <Box>
       {todoList.map((todo) => {
         const { id, title, isCompleted, isDelete } = todo;
-        // console.log(isCompleted);
-        let todoContent;
-        !isDelete &&
-          (todoContent = (
-            <Box>
-              <Checkbox checked={isCompleted} onChange={handleChange(id)} />
-              <IconButton onClick={handleDelete(id)}>
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          ));
-
-        isDelete &&
-          (todoContent = (
-            <Box>
-              <IconButton onClick={handleUndo(todo)}>
-                <UndoIcon />
-              </IconButton>
-            </Box>
-          ));
-
         return (
           <Box
             key={id}
@@ -109,7 +83,20 @@ export default memo(function ListTodo({
             >
               {title}
             </Typography>
-            {todoContent}
+            {!isDelete ? (
+              <Box>
+                <Checkbox checked={isCompleted} onChange={handleChange(id)} />
+                <IconButton onClick={handleDelete(todo)}>
+                  <DeleteIcon />
+                </IconButton>
+              </Box>
+            ) : (
+              <Box>
+                <IconButton onClick={handleUndo(id)}>
+                  <UndoIcon />
+                </IconButton>
+              </Box>
+            )}
           </Box>
         );
       })}
