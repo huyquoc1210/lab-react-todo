@@ -4,11 +4,11 @@ import { sleep } from "src/utils/misc";
 import { Filter, Todo } from "../../types";
 import DeleteTodo from "../DeleteTodo";
 import ToastTodo from "../ToastTodo";
-import { AddTodo } from "./AddTodo";
-import { FilterTodo } from "./FilterTodo";
+import AddTodo from "./AddTodo";
+import FilterTodo from "./FilterTodo";
 import ListTodo from "./ListTodo";
 import SearchTodo from "./SearchTodo";
-import { TitleTodo } from "./TitleTodo";
+import TitleTodo from "./TitleTodo";
 
 // import { v4 as uuidv4 } from "uuid";
 
@@ -77,7 +77,7 @@ export function TodoApp() {
     setOpen(true);
   };
 
-  function handleUndoTodo(todoDelete: string) {
+  const handleUndoTodo = (todoDelete: string) => {
     const newTodoList = todoList.map((todo) => {
       if (todo.id === todoDelete) {
         return { ...todo, isDelete: false };
@@ -85,10 +85,10 @@ export function TodoApp() {
       return todo;
     });
     setTodoList(newTodoList);
-  }
+  };
 
-  const handleChangTodoCallback = useCallback(
-    function handleChangeTodo(todoId: string) {
+  const handleChangeTodo = useCallback(
+    (todoId: string) => {
       const newTodoList = todoList.map((todo) => {
         if (todo.id === todoId) {
           return { ...todo, isCompleted: !todo.isCompleted };
@@ -100,13 +100,13 @@ export function TodoApp() {
     [todoList]
   );
 
-  function handleSearchTodo(value: string) {
+  const handleSearchTodo = (value: string) => {
     setQuery(value);
-  }
+  };
 
-  function handleFilterTodo(filter: Filter) {
+  const handleFilterTodo = (filter: Filter) => {
     setFilter(filter);
-  }
+  };
   // console.log(query);
 
   function filterTodo(todoList: Todo[], query: string, filter: Filter) {
@@ -154,7 +154,7 @@ export function TodoApp() {
 
         <ListTodo
           todoList={result}
-          onChangeTodo={handleChangTodoCallback}
+          onChangeTodo={handleChangeTodo}
           onDeleteTodo={handleOpenDeleteTodo}
           onUndoTodo={handleUndoTodo}
         />

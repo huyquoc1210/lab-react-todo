@@ -1,12 +1,12 @@
 import { Box, Button } from "@mui/material";
 import { Filter } from "src/types";
 
-export interface FilterTodoProps {
+interface FilterTodoProps {
   filter: Filter;
   onFilterTodo: (filter: Filter) => void;
 }
 
-export function FilterTodo({ filter, onFilterTodo }: FilterTodoProps) {
+export default function FilterTodo({ filter, onFilterTodo }: FilterTodoProps) {
   //   function handleClickAll(_event: MouseEvent<HTMLButtonElement>) {
   //     onFilterTodo("all");
   //   }

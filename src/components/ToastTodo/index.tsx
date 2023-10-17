@@ -1,7 +1,7 @@
 import { Alert, Box, Snackbar } from "@mui/material";
 import { Todo } from "src/types";
 
-export interface ToastTodoProps {
+interface ToastTodoProps {
   openToast: boolean;
   onClose: () => void;
   todo: Todo | null;

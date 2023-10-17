@@ -5,11 +5,11 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { Todo } from "src/types";
 import { sleep } from "src/utils/misc";
 
-export interface AddTodoProps {
+interface AddTodoProps {
   onAddTodo: (todo: Todo) => void;
 }
 
-export function AddTodo({ onAddTodo }: AddTodoProps) {
+export default function AddTodo({ onAddTodo }: AddTodoProps) {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
 

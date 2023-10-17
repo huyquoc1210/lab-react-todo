@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { LoadingButton } from "@mui/lab";
 import { useState } from "react";
 
-export interface DeleteTodoProps {
+interface DeleteTodoProps {
   open: boolean;
   todo: Todo | null;
   onClose: () => void;

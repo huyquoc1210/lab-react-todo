@@ -3,7 +3,7 @@ import { Box, IconButton, TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import { ChangeEvent, FormEvent, useState } from "react";
 
-export interface SearchTodoProps {
+interface SearchTodoProps {
   onSearchTodo: (value: string) => void;
 }
 

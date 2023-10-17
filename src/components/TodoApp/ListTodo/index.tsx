@@ -4,7 +4,7 @@ import UndoIcon from "@mui/icons-material/Undo";
 import { ChangeEvent, MouseEvent, memo } from "react";
 import { Todo } from "src/types";
 
-export interface ListTodoProps {
+interface ListTodoProps {
   todoList: Todo[];
   onChangeTodo: (id: string) => void;
   onDeleteTodo: (todo: Todo) => void;
