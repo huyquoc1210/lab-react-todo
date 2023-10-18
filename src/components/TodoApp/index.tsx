@@ -109,7 +109,7 @@ export function TodoApp() {
   };
   // console.log(query);
 
-  function filterTodo(todoList: Todo[], query: string, filter: Filter) {
+  const filterTodo = (todoList: Todo[], query: string, filter: Filter) => {
     query = query.toLowerCase();
 
     const newTodoList = todoList.filter((todo) =>
@@ -132,7 +132,7 @@ export function TodoApp() {
         return newTodoList.filter((todo) => !todo.isDelete);
       }
     }
-  }
+  };
 
   const result = useMemo(
     () => filterTodo(todoList, query, filter),
